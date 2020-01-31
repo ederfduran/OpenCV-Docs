@@ -1,2 +1,2 @@
 # OpenCV-Docs
-Main OpenCV functionalities.
+Main OpenCV functionalities Documented.
