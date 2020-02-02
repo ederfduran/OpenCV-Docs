@@ -101,3 +101,49 @@ double scale_up_x = 1.5;
 double scale_up_y = 1.5;
 cv::resize(source_img,scaled_up,cv::Size(),scale_up_x,scale_up_y,cv::INTER_LINEAR);
 ```
+
+### Math Image Operations
+
+* Convert from unsigned char to float.
+```c++
+double scale_factor= 1/255;
+double shift=0;
+cv::Mat out_img;
+img.convertTo(out_img,CV_32FC3,scale_factor,shift);
+```
+
+* Convert from float to unsigned char.
+```c++
+double scale_factor=255;
+double shift=0;
+cv::Mat out_img;
+img.convertTo(out_img,CV_8UC3,scale_factor,shift);
+```
+
+* Enhace Contrast
+```c++
+double contrast_percentage = 30.0;
+// Convert contrastHigh to float
+img.convertTo(img, CV_64F);
+// we are just incrementing in 30% the intensity of each pixel
+img = img * (1+contrast_percentage/100.0);
+// to display properly
+img.convertTo(img,CV_8UC3);
+```
+
+* Enhance Brightness
+```c++
+int brightness_offset = 50;
+// Add the offset for increasing brightness
+cv::Mat bright_high = img.clone();
+cv::Mat bright_high_hannels[3];
+cv::split(bright_high, bright_high_hannels);
+for (int i=0; i < bright_high.channels(); i++){
+    // adds 50 to each pixel in each channel
+    cv::add(bright_high_hannels[i],brightness_offset,bright_high_hannels[i]);
+}
+merge(bright_high_hannels,3,bright_high);
+cv::imshow("Bright Enhanced",bright_high);
+```
+
+
